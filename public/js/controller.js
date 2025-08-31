@@ -296,6 +296,18 @@ const controller_s = p => {
     // Setup p5js Canvas
     p.setup = () => {
         allExpHandler = new expState();
+
+        // If participant already completed everything, show completion and bypass setup
+        if (window.__completedAll === true) {
+            try {
+                document.getElementById('controller_div').style.display = 'none';
+                document.getElementById('consent_div').style.display = 'none';
+                document.getElementById('completed_div').style.display = 'block';
+                document.getElementById('title_div').innerHTML = "Thank you";
+            } catch (e) {}
+            return;
+        }
+
         imgInterGMSI = p.loadImage('static/images/main/Questionnaire Next Divider.jpg');
         imgInterAud = p.loadImage('static/images/main/Auditory Next Divider.jpg');
         vidIntro = p.createVideo("static/videos/audcog_prevent_intro.mp4");
