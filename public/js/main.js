@@ -8,7 +8,6 @@
 // Login to Firebase Database
 let auth, userID, database, taskresults;
 window.addEventListener('DOMContentLoaded', (event) => {
-    console.log('DOM fully loaded and parsed');
     // Browser and device checks
     const isChrome = /chrome/.test(navigator.userAgent.toLowerCase());
     const isSuitable = true; //(window.innerWidth > 400) && (window.innerHeight > 200)
@@ -89,7 +88,6 @@ function getUserIDFromQueryString() {
 }
 
 document.getElementById('submitbutton').addEventListener('click', async function () {
-    console.log('[AudCog] START clicked with userID=', userID);
     // Proactively unlock/resume audio, request fullscreen, orientation, and wake lock for better compatibility
     try {
         if (window.AudcogUtils) {
@@ -111,15 +109,12 @@ document.getElementById('submitbutton').addEventListener('click', async function
             document.body.style.margin = "0px";
             document.getElementById('error_message').innerHTML = "";
             database_uid = auth.getUid();
-            console.log('[AudCog] Signed in anonymously. uid=', database_uid);
             createTaskWorkflow(userID);
 
             // Load global visit counters (optional)
             taskresults.child('visits').once("value", function (snapshot) {
                 allVisits = snapshot.val();
-                console.log('[AudCog] Global visits snapshot =', allVisits);
             }, function (error) {
-                console.log("[AudCog] Error reading visits:", error.code);
             });
 
             // Checks if the user has done a task previously
@@ -130,9 +125,7 @@ document.getElementById('submitbutton').addEventListener('click', async function
                 } else {
                     userVisits = snapshot.val();
                 };
-                console.log('[AudCog] sessions for user =', userVisits);
             }, function (error) {
-                console.log("[AudCog] Error reading sessions:", error.code);
             });
 
             // Build resume order before creating the controller
@@ -140,41 +133,30 @@ document.getElementById('submitbutton').addEventListener('click', async function
                 try {
                     if (userSnap && userSnap.exists()) {
                         const v = userSnap.val() || {};
-                        const keys = Object.keys(v);
                         const hasAll = !!(v.din && v.sib && v.awm && v.gmsi && (v.misc || v.timings));
-                        console.log('[AudCog] User snapshot keys =', keys, 'hasAll=', hasAll);
                         if (hasAll) {
                             window.__completedAll = true;
                             window.__resumeOrder = [];
-                            console.log('[AudCog] Marked completedAll -> true');
                             return; // done
                         }
                         if (typeof window.buildResumeOrderFromDb === 'function') {
                             const hasProgress = !!(v.din || v.sib || v.awm || v.gmsi || v.misc || v.timings);
-                            console.log('[AudCog] hasProgress=', hasProgress);
                             if (hasProgress) {
                                 window.__resumeOrder = window.buildResumeOrderFromDb(userSnap);
-                                console.log('[AudCog] Computed resumeOrder =', window.__resumeOrder, 'completedAll=', window.__completedAll);
                             } else {
                                 window.__resumeOrder = undefined;
                                 window.__completedAll = false;
-                                console.log('[AudCog] No prior progress detected; starting fresh');
                             }
                         }
-                    } else {
-                        console.log('[AudCog] No user snapshot found; starting fresh');
                     }
                 } catch (e) {
-                    console.log('[AudCog] Error building resume order:', e);
                     window.__resumeOrder = undefined;
                 }
             }).finally(() => {
-                console.log('[AudCog] Creating controller. completedAll=', window.__completedAll, 'resumeOrder=', window.__resumeOrder);
                 createController();
             });
 
         }).catch(err => {
-            console.log('[AudCog] Auth error:', err.message);
             document.getElementById('error_message').innerHTML = err.message;
         });
     };
