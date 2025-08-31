@@ -13,6 +13,18 @@ window.addEventListener('DOMContentLoaded', (event) => {
     const isChrome = /chrome/.test(navigator.userAgent.toLowerCase());
     const isSuitable = true; //(window.innerWidth > 400) && (window.innerHeight > 200)
 
+    // Basic audio capability check
+    const hasAudioSupport = !!(window.AudioContext || window.webkitAudioContext);
+    if (!hasAudioSupport) {
+        try {
+            document.getElementById('login_div').style.display = 'none';
+            const errDiv = document.getElementById('browser_device_error');
+            errDiv.style.display = 'block';
+            errDiv.innerHTML = "<p>Your browser does not support required Web Audio features.</p><p>Please update your browser or use the latest Chrome/Edge/Firefox.</p>";
+        } catch (e) {}
+        return;
+    }
+
     // Doesn't have to be Chrome for the time being
     if (isSuitable) {
 
@@ -32,9 +44,15 @@ window.addEventListener('DOMContentLoaded', (event) => {
             appId: "1:652871235053:web:7776007488c3ccf30163e4",
             measurementId: "G-PCY56CPWHB"
         };
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        firebase.analytics();
+        // Initialize Firebase (guard against re-init)
+        try {
+            if (!firebase.apps || firebase.apps.length === 0) {
+                firebase.initializeApp(firebaseConfig);
+            }
+        } catch (e) {
+            // ignore if already initialized
+        }
+        try { if (firebase.analytics) { firebase.analytics(); } } catch (e) {}
         database = firebase.database();
         taskresults = database.ref('audcog-online');
         auth = firebase.auth();
@@ -70,12 +88,15 @@ function getUserIDFromQueryString() {
     return urlParams.get('userID');
 }
 
-document.getElementById('submitbutton').addEventListener('click', function () {
-    // Proactively unlock/resume audio and request fullscreen for better compatibility
+document.getElementById('submitbutton').addEventListener('click', async function () {
+    // Proactively unlock/resume audio, request fullscreen, orientation, and wake lock for better compatibility
     try {
         if (window.AudcogUtils) {
-            AudcogUtils.unlockAudio();
-            AudcogUtils.requestFullscreenSafely();
+            await AudcogUtils.unlockAudio();
+            await AudcogUtils.requestFullscreenSafely();
+            AudcogUtils.lockOrientation('landscape');
+            AudcogUtils.requestWakeLock();
+            AudcogUtils.setTaskActive(true);
         } else {
             openFullscreen();
         }

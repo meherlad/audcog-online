@@ -75,11 +75,60 @@
                 try { ctx.suspend(); } catch (e) {}
             } else {
                 resumeAudio();
+                // Reacquire wake lock when returning
+                requestWakeLock();
             }
         });
         // iOS pagehide fires when tab changes
         window.addEventListener('pagehide', () => { try { ctx.suspend(); } catch (e) {} });
-        window.addEventListener('pageshow', () => { resumeAudio(); });
+        window.addEventListener('pageshow', () => { resumeAudio(); requestWakeLock(); });
+    }
+
+    // Screen Wake Lock API
+    let wakeLock = null;
+    async function requestWakeLock() {
+        try {
+            if ('wakeLock' in navigator) {
+                if (wakeLock) return wakeLock;
+                wakeLock = await navigator.wakeLock.request('screen');
+                wakeLock.addEventListener('release', () => { wakeLock = null; });
+                return wakeLock;
+            }
+        } catch (e) {
+            wakeLock = null;
+        }
+        return null;
+    }
+    async function releaseWakeLock() {
+        try {
+            if (wakeLock) { await wakeLock.release(); wakeLock = null; }
+        } catch (e) {}
+    }
+
+    // Orientation lock (best-effort)
+    async function lockOrientation(orientation) {
+        try {
+            if (screen.orientation && screen.orientation.lock) {
+                await screen.orientation.lock(orientation || 'landscape');
+                return true;
+            }
+        } catch (e) {}
+        return false;
+    }
+
+    // Unload guard during tasks
+    let taskActive = false;
+    function setTaskActive(active) {
+        taskActive = !!active;
+    }
+    function installUnloadGuard() {
+        window.addEventListener('beforeunload', function (e) {
+            if (taskActive) {
+                e.preventDefault();
+                e.returnValue = '';
+                return '';
+            }
+        });
     }
 
     function requestFullscreenSafely(element) {
@@ -103,10 +152,16 @@
         unlockAudio: () => resumeAudio(),
         installVisibilityHandling,
         requestFullscreenSafely,
-        getAudioContextCompat: getCtx
+        getAudioContextCompat: getCtx,
+        requestWakeLock,
+        releaseWakeLock,
+        lockOrientation,
+        installUnloadGuard,
+        setTaskActive
     };
 
-    // Auto-install unlock listeners and visibility handling early
+    // Auto-install unlock listeners and visibility/unload handling early
     unlockOnFirstGesture();
     installVisibilityHandling();
+    installUnloadGuard();
 })();
