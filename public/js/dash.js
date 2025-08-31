@@ -1,21 +1,21 @@
-// Login to Firebase Database
-let auth, database, taskresults;
-let databaseUID;
-let audcogData;
+// Dashboard for viewing results
+let databaseUID, audcogData;
+
+// Firebase configuration
+const firebaseConfig = {
+    apiKey: "AIzaSyDPTy_twUrqEXlVfpALoqYkPdcux7klcEQ",
+    authDomain: "audcog-online.firebaseapp.com",
+    databaseURL: "https://audcog-online-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "audcog-online",
+    storageBucket: "audcog-online.appspot.com",
+    messagingSenderId: "652871235053",
+    appId: "1:652871235053:web:7776007488c3ccf30163e4",
+    measurementId: "G-PCY56CPWHB"
+};
+
 window.addEventListener('DOMContentLoaded', (event) => {
     console.log('Dashboard DOM fully loaded and parsed');
     
-    // Web app's Firebase configuration
-    const firebaseConfig = {
-        apiKey: "AIzaSyBVzYViFsrN67Eop8Z69jZv5T3Ps4VSJvk",
-        authDomain: "auditory-cognition.firebaseapp.com",
-        databaseURL: "https://auditory-cognition-default-rtdb.europe-west1.firebasedatabase.app",
-        projectId: "auditory-cognition",
-        storageBucket: "auditory-cognition.appspot.com",
-        messagingSenderId: "617264139072",
-        appId: "1:617264139072:web:b8f25f4294829a231708a5",
-        measurementId: "G-06HW9GSL4Y"
-        };
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
     firebase.analytics();

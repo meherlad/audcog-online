@@ -448,8 +448,19 @@ function displayDebug() {
 function displayChecks() {
     if (allExpHandler.state == 0) {
         document.getElementById('title_div').innerHTML = "Welcome Video";
-        let img = vidIntro.get();
-        controller.image(img, controller.width / 2, controller.height / 2 - 100);
+        
+        if (vidIntro && vidIntro.get) {
+            let img = vidIntro.get();
+            controller.image(img, controller.width / 2, controller.height / 2 - 100);
+        } else {
+            // Fallback if video failed to load
+            controller.textSize(20);
+            controller.textAlign(controller.CENTER);
+            controller.text("Welcome to the AudCog Study", controller.width / 2, controller.height / 2 - 50);
+            controller.text("Please watch the introduction video", controller.width / 2, controller.height / 2);
+            controller.text("(Video loading...)", controller.width / 2, controller.height / 2 + 30);
+        }
+        
         controller.textSize(30);
         controller.textAlign(controller.CENTER);
         controller.text("Click below after the video", controller.width / 2, 580);
