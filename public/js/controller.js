@@ -294,6 +294,7 @@ const controller_s = p => {
 
         // If participant already completed everything, show completion and bypass setup
         if (window.__completedAll === true) {
+            console.log('[AudCog] Controller setup: completedAll=true. Showing completed_div');
             try {
                 document.getElementById('sib_div').style.display = 'none';
                 document.getElementById('awm_div').style.display = 'none';
@@ -303,10 +304,11 @@ const controller_s = p => {
                 document.getElementById('consent_div').style.display = 'none';
                 document.getElementById('completed_div').style.display = 'block';
                 document.getElementById('title_div').innerHTML = "Thank you";
-            } catch (e) {}
+            } catch (e) { console.log('[AudCog] Error showing completed_div', e); }
             return;
         }
 
+        console.log('[AudCog] Controller setup: completedAll=false. Building normal UI');
         imgInterGMSI = p.loadImage('static/images/main/Questionnaire Next Divider.jpg');
         imgInterAud = p.loadImage('static/images/main/Auditory Next Divider.jpg');
         vidIntro = p.createVideo("static/videos/audcog_prevent_intro.mp4");
