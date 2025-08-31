@@ -21,6 +21,10 @@ firebase-debug.*.log*
 !firebase.json
 !database.rules.json
 
+# Explicitly ignore Firebase service account keys
+*firebase-adminsdk*.json
+*service-account*.json
+
 # Analysis folder (contains sensitive data and credentials)
 analysis/
 
