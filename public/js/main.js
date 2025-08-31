@@ -136,7 +136,11 @@ document.getElementById('submitbutton').addEventListener('click', async function
             taskresults.child(userID).get().then(userSnap => {
                 try {
                     if (userSnap && userSnap.exists() && typeof window.buildResumeOrderFromDb === 'function') {
-                        window.__resumeOrder = window.buildResumeOrderFromDb(userSnap);
+                        const v = userSnap.val() || {};
+                        const hasProgress = !!(v.din || v.sib || v.awm || v.gmsi || v.misc || v.timings);
+                        if (hasProgress) {
+                            window.__resumeOrder = window.buildResumeOrderFromDb(userSnap);
+                        }
                     }
                 } catch (e) {}
             }).finally(() => {
