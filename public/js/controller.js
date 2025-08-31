@@ -195,25 +195,20 @@ let expTasks;
 function buildResumeOrderFromDbSnapshot(userSnap) {
     try {
         const exists = (path) => userSnap && userSnap.child(path) && userSnap.child(path).exists();
+        const hasChildren = (path) => {
+            if (!exists(path)) return false;
+            const v = userSnap.child(path).val();
+            return v && typeof v === 'object' && Object.keys(v).length > 0;
+        };
         const done = {
-            din: exists('din'),
-            sib: exists('sib'),
-            awm: exists('awm'),
+            din: hasChildren('din'),
+            sib: hasChildren('sib'),
+            awm: hasChildren('awm'),
             demog: exists('misc') || exists('timings')
         };
-        // GMSI complete if any child has 39 responses
-        let gmsiComplete = false;
-        if (exists('gmsi')) {
-            const gmsiVal = userSnap.child('gmsi').val();
-            if (gmsiVal) {
-                for (let key in gmsiVal) {
-                    const entry = gmsiVal[key];
-                    if (entry && entry['GMSI responses'] && entry['GMSI responses'].length >= 39) {
-                        gmsiComplete = true; break;
-                    }
-                }
-            }
-        }
+        // Consider GMSI complete if any gmsi data exists (avoid false negatives)
+        const gmsiComplete = hasChildren('gmsi');
+
         const remainingAudio = [];
         if (!done.din) remainingAudio.push(1);
         if (!done.sib) remainingAudio.push(2);

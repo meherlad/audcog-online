@@ -140,9 +140,14 @@ document.getElementById('submitbutton').addEventListener('click', async function
                         const hasProgress = !!(v.din || v.sib || v.awm || v.gmsi || v.misc || v.timings);
                         if (hasProgress) {
                             window.__resumeOrder = window.buildResumeOrderFromDb(userSnap);
+                        } else {
+                            window.__resumeOrder = undefined;
+                            window.__completedAll = false;
                         }
                     }
-                } catch (e) {}
+                } catch (e) {
+                    window.__resumeOrder = undefined;
+                }
             }).finally(() => {
                 createController();
             });
