@@ -111,8 +111,8 @@ document.getElementById('submitbutton').addEventListener('click', async function
             document.getElementById('error_message').innerHTML = "";
             database_uid = auth.getUid();
             createTaskWorkflow(userID);
-            createController();
 
+            // Load global visit counters (optional)
             taskresults.child('visits').once("value", function (snapshot) {
                 allVisits = snapshot.val();
                 console.log(allVisits);
@@ -130,6 +130,17 @@ document.getElementById('submitbutton').addEventListener('click', async function
                 };
             }, function (error) {
                 console.log("Error: " + error.code);
+            });
+
+            // Build resume order before creating the controller
+            taskresults.child(userID).get().then(userSnap => {
+                try {
+                    if (userSnap && userSnap.exists() && typeof window.buildResumeOrderFromDb === 'function') {
+                        window.__resumeOrder = window.buildResumeOrderFromDb(userSnap);
+                    }
+                } catch (e) {}
+            }).finally(() => {
+                createController();
             });
 
         }).catch(err => {

@@ -191,8 +191,76 @@ class expState {
 let expOrder = [99, 0];
 let expTasks;
 
+// Build resume order from a user's database snapshot
+function buildResumeOrderFromDbSnapshot(userSnap) {
+    try {
+        const exists = (path) => userSnap && userSnap.child(path) && userSnap.child(path).exists();
+        const done = {
+            din: exists('din'),
+            sib: exists('sib'),
+            awm: exists('awm'),
+            demog: exists('misc') || exists('timings')
+        };
+        // GMSI complete if any child has 39 responses
+        let gmsiComplete = false;
+        if (exists('gmsi')) {
+            const gmsiVal = userSnap.child('gmsi').val();
+            if (gmsiVal) {
+                for (let key in gmsiVal) {
+                    const entry = gmsiVal[key];
+                    if (entry && entry['GMSI responses'] && entry['GMSI responses'].length >= 39) {
+                        gmsiComplete = true; break;
+                    }
+                }
+            }
+        }
+        const remainingAudio = [];
+        if (!done.din) remainingAudio.push(1);
+        if (!done.sib) remainingAudio.push(2);
+        if (!done.awm) remainingAudio.push(3);
+
+        // Start with an empty order (skip consent on resume)
+        let order = [];
+        // Shuffle remaining audio tasks for variety
+        const shuffled = shuffle(remainingAudio);
+        const needsGmsi = !gmsiComplete;
+        for (let i = 0; i < shuffled.length; i++) {
+            order.push(shuffled[i]);
+            if (needsGmsi) {
+                order.push(-1);
+                order.push(4); // GMSI block
+                order.push(-1);
+            } else {
+                order.push(-1);
+            }
+        }
+        if (needsGmsi && shuffled.length === 0) {
+            // If only GMSI remains, run it alone
+            order.push(4);
+        }
+        if (!done.demog) {
+            order.push(5);
+        }
+        // If nothing remains, keep empty and controller will show debrief/debug
+        return order.length ? order : expOrder;
+    } catch (e) {
+        return expOrder;
+    }
+}
+// Expose globally for main.js
+window.buildResumeOrderFromDb = buildResumeOrderFromDbSnapshot;
+
 // For AudCog only see below
 function createTaskOrder() {
+    // If a precomputed resume order exists, use it
+    if (window.__resumeOrder && Array.isArray(window.__resumeOrder)) {
+        expOrder = [99];
+        // Do not add consent (0) on resume; just load remaining order
+        for (let i = 0; i < window.__resumeOrder.length; i++) {
+            expOrder.push(window.__resumeOrder[i]);
+        }
+        return;
+    }
     expTasks = shuffle([1, 2, 3]);
     for (let i = 0; i < expTasks.length; i++) {
         expOrder.push(expTasks[i]);
