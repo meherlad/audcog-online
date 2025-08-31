@@ -241,8 +241,13 @@ function buildResumeOrderFromDbSnapshot(userSnap) {
         if (!done.demog) {
             order.push(5);
         }
-        // If nothing remains, keep empty and controller will show debrief/debug
-        return order.length ? order : expOrder;
+        if (order.length === 0) {
+            // Completed all tasks
+            window.__completedAll = true;
+        } else {
+            window.__completedAll = false;
+        }
+        return order;
     } catch (e) {
         return expOrder;
     }
@@ -252,6 +257,17 @@ window.buildResumeOrderFromDb = buildResumeOrderFromDbSnapshot;
 
 // For AudCog only see below
 function createTaskOrder() {
+    // If participant completed everything, show completion message and stop
+    if (window.__completedAll === true) {
+        try {
+            document.getElementById('controller_div').style.display = 'none';
+            document.getElementById('consent_div').style.display = 'none';
+            document.getElementById('completed_div').style.display = 'block';
+            document.getElementById('title_div').innerHTML = "Thank you";
+        } catch (e) {}
+        expOrder = [99];
+        return;
+    }
     // If a precomputed resume order exists, use it
     if (window.__resumeOrder && Array.isArray(window.__resumeOrder)) {
         expOrder = [99];
