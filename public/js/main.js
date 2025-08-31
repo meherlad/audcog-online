@@ -135,14 +135,22 @@ document.getElementById('submitbutton').addEventListener('click', async function
             // Build resume order before creating the controller
             taskresults.child(userID).get().then(userSnap => {
                 try {
-                    if (userSnap && userSnap.exists() && typeof window.buildResumeOrderFromDb === 'function') {
+                    if (userSnap && userSnap.exists()) {
                         const v = userSnap.val() || {};
-                        const hasProgress = !!(v.din || v.sib || v.awm || v.gmsi || v.misc || v.timings);
-                        if (hasProgress) {
-                            window.__resumeOrder = window.buildResumeOrderFromDb(userSnap);
-                        } else {
-                            window.__resumeOrder = undefined;
-                            window.__completedAll = false;
+                        const hasAll = !!(v.din && v.sib && v.awm && v.gmsi && (v.misc || v.timings));
+                        if (hasAll) {
+                            window.__completedAll = true;
+                            window.__resumeOrder = [];
+                            return; // done
+                        }
+                        if (typeof window.buildResumeOrderFromDb === 'function') {
+                            const hasProgress = !!(v.din || v.sib || v.awm || v.gmsi || v.misc || v.timings);
+                            if (hasProgress) {
+                                window.__resumeOrder = window.buildResumeOrderFromDb(userSnap);
+                            } else {
+                                window.__resumeOrder = undefined;
+                                window.__completedAll = false;
+                            }
                         }
                     }
                 } catch (e) {

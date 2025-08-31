@@ -295,6 +295,10 @@ const controller_s = p => {
         // If participant already completed everything, show completion and bypass setup
         if (window.__completedAll === true) {
             try {
+                document.getElementById('sib_div').style.display = 'none';
+                document.getElementById('awm_div').style.display = 'none';
+                document.getElementById('din_div').style.display = 'none';
+                document.getElementById('gmsi_div').style.display = 'none';
                 document.getElementById('controller_div').style.display = 'none';
                 document.getElementById('consent_div').style.display = 'none';
                 document.getElementById('completed_div').style.display = 'block';
