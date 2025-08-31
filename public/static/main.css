@@ -1,0 +1,25 @@
+body {
+    background: #ffffff;
+    color: #333333;
+    margin-top: 5rem;
+}
+  
+h1, h2, h3, h4, h5, h6 {
+    color: #444444;
+}
+  
+  .content-section {
+    background: #ffffff;
+    padding: 20px 30px;
+    border: 1px solid #000000;
+    border-radius: 3px;
+    margin-bottom: 20px;
+}
+
+  #chart_div {
+    text-align: center;
+ }
+
+  canvas {
+    margin: 0 auto;
+}

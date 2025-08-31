@@ -1,0 +1,420 @@
+<html>
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="static/main.css">
+
+    <title> AudCog - Great Minds </title>
+
+</head>
+
+<body>
+    <header class="site-header">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top" id="audcog_header">
+            <div class="container">
+                <a class="navbar-brand mx-auto" href="/"> AudCog: Great Minds</a>
+            </div>
+        </nav>
+    </header>
+
+    <main role="main" class="container-fluid py-2">
+        <div class="row justify-content-center">
+            <div class="col">
+            </div>
+
+            <!-- Appearances of all divs in this container are run by main.js -->
+            <div class="col-md-12">
+
+                <!-- Title Div is shown to guide a participant through task -->
+                <div class="content-section text-center font-weight-bold border-0 h3" id="title_div">
+                </div>
+
+                <div class="progress" style="height: 30px;">
+                    <div class="progress-bar progress-bar-striped bg-info" id=progressBar role="progressbar"
+                        style="width: 0%" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+
+                <!-- This Error Div comes up if the browser is not Chrome or the Screen is less than 1000 pixels wide and 500 pixels high -->
+                <div class="content-section" id="browser_device_error" style='display:none'>
+                    <p> This device or browser is not supported OR </p>
+                    <p> Your screen is too small </p>
+                    <p> Please use Google Chrome on a Desktop or Laptop computer </p>
+                    <p> Try maximizing your browser window and refresh the webpage </p>
+                </div>
+
+                <div class="content-section" id="id_error" style='display:none'>
+                    <p> Your ID is not registered to take part </p>
+                    <p> Or there is an error in the way it is entered </p>
+                    <p> </p>
+                    <p> Please contact
+                        <span class="font-weight-bold">audcog@ncl.ac.uk
+                        </span>for more information
+                    </p>
+                </div>
+
+                <!-- Controller Div is shown when an experimenter wants to test a task -->
+                <div class="content-section text-center border-0" id="controller_div" style='display:none'>
+                    <div class="form-group" id="debrief_div" style='display:none'>
+                        <div class="col m-3 p-3 border border-secondary rounded bg-light">
+                            <h5 class="text-muted p-2"> Thank you for participating in the AudCog study. </h5>
+                            <h5 class="text-muted p-2"> You contribution will help us understand the link between
+                                hearing ability and risk for dementia. </h5>
+                            <h5 class="text-muted p-2"> As mentioned previously, these were research tests only so we do
+                                not provide any feedback on performance. </h5>
+                            <hr>
+                            <h5 class="text-muted p-2"> You are eligible for a £50 Amazon voucher </h5>
+                            <h6 class="text-muted font-weight-light p-2"> If you would like to be entered into a draw
+                                for this, please email the
+                                address below </h6>
+                            <h6 class="text-muted font-weight-normal p-2"> audcog@ncl.ac.uk </h6>
+                        </div>
+                        <h5 class="text-dark font-weight-normal p-1"> You may now close this window </h5>
+                    </div>
+                </div>
+
+                <!-- Demographics Div is shown when displayDemogForm function runs -->
+                <div class="text-center content-section border-0" id="demog_div">
+                    <div class="form-group">
+                        <h4 class="text-dark font-weight-normal p-5"> Please answer the last few questions below...
+                        </h4>
+                        <div class="col m-3 p-3 border border-secondary rounded bg-light">
+                            <h5 class="text-muted font-weight-light p-2"> How old are you? </h5> <input id='userAge'
+                                type='text' class='p-2' style="text-align:center">
+                        </div>
+                        <div class="col m-3 p-3 border border-secondary rounded bg-light">
+                            <h5 class="text-muted font-weight-light p-2"> What was your sex at birth? </h5>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions1" id="Q1_1"
+                                    value="option1">
+                                <label class="form-check-label" for="Q1_1"> Male </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions1" id="Q1_2"
+                                    value="option2">
+                                <label class="form-check-label" for="Q1_2"> Female </label>
+                            </div>
+                        </div>
+                        <div class="col m-3 p-3 border border-secondary rounded bg-light">
+                            <h5 class="text-muted font-weight-light p-2"> What device are you using? </h5>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions2" id="Q2_1"
+                                    value="option1">
+                                <label class="form-check-label" for="Q2_1"> Laptop </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions2" id="Q2_2"
+                                    value="option1">
+                                <label class="form-check-label" for="Q2_2"> Desktop </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions2" id="Q2_3"
+                                    value="option2">
+                                <label class="form-check-label" for="Q2_3"> Tablet/iPad </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions2" id="Q2_4"
+                                    value="option3">
+                                <label class="form-check-label" for="Q2_4"> Mobile Phone </label>
+                            </div>
+                        </div>
+                        <div class="col m-3 p-3 border border-secondary rounded bg-light">
+                            <h5 class="text-muted font-weight-light p-2"> What headphones are you using? </h5>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions3" id="Q3_1"
+                                    value="option1">
+                                <label class="form-check-label" for="Q3_1"> Over-ear heaphones</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions3" id="Q3_2"
+                                    value="option2">
+                                <label class="form-check-label" for="Q3_2"> In-ear headphones </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions3" id="Q3_3"
+                                    value="option2">
+                                <label class="form-check-label" for="Q3_3"> Speakers </label>
+                            </div>
+                        </div>
+                        <div class="col m-3 p-3 border border-secondary rounded bg-light">
+                            <h5 class="text-muted font-weight-light p-2"> Do you have Hearing Aids? </h5>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions4" id="Q4_1"
+                                    value="option1">
+                                <label class="form-check-label" for="Q4_1"> Yes </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions4" id="Q4_2"
+                                    value="option2">
+                                <label class="form-check-label" for="Q4_2"> No </label>
+                            </div>
+                        </div>
+                        <div class="col m-3 p-3 border border-secondary rounded bg-light">
+                            <h5 class="text-muted font-weight-light p-2"> If you have hearing aids, how long have you
+                                used them for? </h5>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions5" id="Q5_1"
+                                    value="option1">
+                                <label class="form-check-label" for="Q5_1"> No hearing aids </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions5" id="Q5_2"
+                                    value="option2">
+                                <label class="form-check-label" for="Q5_2"> Less than 1 year </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions5" id="Q5_3"
+                                    value="option2">
+                                <label class="form-check-label" for="Q5_3"> More than 1 year </label>
+                            </div>
+                        </div>
+                        <div class="col m-3 p-3 border border-secondary rounded bg-light">
+                            <h5 class="text-muted font-weight-light p-2"> If you have hearing aids, how often do you use
+                                them? </h5>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions6" id="Q6_1"
+                                    value="option1">
+                                <label class="form-check-label" for="Q6_1"> No hearing aids </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions6" id="Q6_2"
+                                    value="option2">
+                                <label class="form-check-label" for="Q6_2"> Less than 4 hours per day </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions6" id="Q6_3"
+                                    value="option2">
+                                <label class="form-check-label" for="Q6_3"> More than 4 hours per day </label>
+                            </div>
+                        </div>
+                        <h5 class="text-muted font-weight-normal p-3">
+                            <ul> Please leave any <span class='font-weight-bold'>comments</span> in the box below as
+                                feedback </ul>
+                        </h5>
+                        <textarea class="form-control" id="comments_box" rows="3"
+                            placeholder="Enter your comments here..."></textarea>
+
+                        <h6 class="text-dark font-weight-light py-5"> Press the <span class="font-weight-bold">Submit
+                            </span>button below to continue </h5>
+                            <div class="text-center col">
+                                <div class="text-danger font-weight-bold p-2">
+                                    <a id="thanks_alert"> </a>
+                                </div>
+                            </div>
+                            <div>
+                                <button id='demogSubmitButton' class="btn btn-dark border-dark font-weight-bold"
+                                    type='button'> Submit </button>
+                            </div>
+                    </div>
+                </div>
+
+                <!-- Results Chart Div is shown when a task runs independently in Debug mode -->
+                <div class="content-section text-center border-0" id="results_div" style='display:none'>
+                    <div id="resultsChart1">
+                    </div>
+                    <h4 id='hugScore' class="text-center text-dark font-weight-bold p-1"> </h4>
+                    <h4 id='sibThres' class="text-center text-dark font-weight-bold p-1"> </h4>
+                    <h4 id='dinThres' class="text-center text-dark font-weight-bold p-1"> </h4>
+                    <div id="resultsChart2">
+                    </div>
+                    <h4 id='freqPrec' class="text-center text-dark font-weight-bold p-1"> </h4>
+                    <h4 id='amPrec' class="text-center text-dark font-weight-bold p-1"> </h4>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Optional JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.4.0/lib/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-database.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/7.1.0/math.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src='https://unpkg.com/simple-statistics@7.7.0/dist/simple-statistics.min.js'></script>
+    <script src="https://cdn.plot.ly/plotly-2.6.3.min.js"></script>
+
+    <script>
+        // Login to Firebase Database
+        let auth, userID, database, taskresults;
+        window.addEventListener('DOMContentLoaded', (event) => {
+            console.log('DOM fully loaded and parsed');
+            // Browser and device checks
+            const isChrome = /chrome/.test(navigator.userAgent.toLowerCase());
+            const isSuitable = true; //(window.innerWidth > 400) && (window.innerHeight > 200)
+
+            // Doesn't have to be Chrome for the time being
+            if (isSuitable) {
+
+                userID = getUserIDFromQueryString();
+
+                if (!userID) { // Check if userID is null or empty
+                    document.getElementById('demog_div').style.display = 'none';
+                    document.getElementById('id_error').style.display = 'block';
+                }
+                // Your web app's Firebase configuration
+                const firebaseConfig = {
+                    apiKey: "AIzaSyDPTy_twUrqEXlVfpALoqYkPdcux7klcEQ",
+                    authDomain: "audcog-online.firebaseapp.com",
+                    databaseURL: "https://audcog-online-default-rtdb.europe-west1.firebasedatabase.app",
+                    projectId: "audcog-online",
+                    storageBucket: "audcog-online.appspot.com",
+                    messagingSenderId: "652871235053",
+                    appId: "1:652871235053:web:7776007488c3ccf30163e4",
+                    measurementId: "G-PCY56CPWHB"
+                };
+                // Initialize Firebase
+                firebase.initializeApp(firebaseConfig);
+                firebase.analytics();
+                database = firebase.database();
+                taskresults = database.ref('audcog-online');
+                auth = firebase.auth();
+
+            } else {
+                login_div.style.display = 'none';
+                browser_device_error_div.style.display = 'block';
+            };
+        });
+        // Authenticate User and Create global variables needed to store in Database
+        let database_uid, allVisits, userVisits;
+
+        // Function to extract userID from the query string
+        function getUserIDFromQueryString() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('userID');
+        }
+
+        // Demographics Form Stuff below
+        let user_age = document.getElementById('userAge');
+        let Q1_1 = document.getElementById('Q1_1');
+        let Q1_2 = document.getElementById('Q1_2');
+        let Q2_1 = document.getElementById('Q2_1');
+        let Q2_2 = document.getElementById('Q2_2');
+        let Q2_3 = document.getElementById('Q2_3');
+        let Q2_4 = document.getElementById('Q2_4');
+        let Q2_5 = document.getElementById('Q2_5');
+        let Q3_1 = document.getElementById('Q3_1');
+        let Q3_2 = document.getElementById('Q3_2');
+        let Q3_3 = document.getElementById('Q3_3');
+        let Q4_1 = document.getElementById('Q4_1');
+        let Q4_2 = document.getElementById('Q4_2');
+        let Q5_1 = document.getElementById('Q5_1');
+        let Q5_2 = document.getElementById('Q5_2');
+        let Q5_3 = document.getElementById('Q5_3');
+        let Q6_1 = document.getElementById('Q6_1');
+        let Q6_2 = document.getElementById('Q6_2');
+        let thanks_alert = document.getElementById('thanks_alert');
+        let comments_box = document.getElementById('comments_box');
+
+        let age, sex, haids, headphones, comp, cardrisk, physical, famhist, inlab, haids_day, haids_yr;
+
+        // Listens for the Demographic Form being clicked
+        document.getElementById('demogSubmitButton').addEventListener("click", submitDemogForm);
+
+        function submitDemogForm() {
+            console.log('test');
+            if (user_age.value == "") {
+                thanks_alert.innerHTML = 'Please enter your Age';
+            } else if (!Q1_1.checked && !Q1_2.checked) {
+                thanks_alert.innerHTML = 'Please answer the Second Question';
+            } else if (!Q2_1.checked && !Q2_2.checked && !Q2_3.checked && !Q2_4.checked) {
+                thanks_alert.innerHTML = 'Please enter the Third Question';
+            } else if (!Q3_1.checked && !Q3_2.checked && !Q3_3.checked) {
+                thanks_alert.innerHTML = 'Please enter the Fourth Question';
+            } else if (!Q4_1.checked && !Q4_2.checked) {
+                thanks_alert.innerHTML = 'Please enter the Fifth Question';
+            } else if (!Q5_1.checked && !Q5_2.checked && !Q5_3.checked) {
+                thanks_alert.innerHTML = 'Please enter the Sixth Question';
+            } else if (!Q6_1.checked && !Q6_2.checked && !Q6_3.checked) {
+                thanks_alert.innerHTML = 'Please enter the Seventh Question';
+            } else {
+                age = user_age.value;
+                if (Q1_1.checked) {
+                    sex = 'male';
+                } else if (Q1_2.checked) {
+                    sex = 'female';
+                };
+                if (Q2_1.checked) {
+                    comp = 'laptop';
+                } else if (Q2_2.checked) {
+                    comp = 'desktop';
+                } else if (Q2_3.checked) {
+                    comp = 'tablet/ipad';
+                } else if (Q2_4.checked) {
+                    comp = 'mobile';
+                };
+                if (Q3_1.checked) {
+                    headphones = 'overear';
+                } else if (Q3_2.checked) {
+                    headphones = 'inear';
+                } else if (Q3_3.checked) {
+                    headphones = 'speakers';
+                };
+                if (Q4_1.checked) {
+                    haids = 'yes';
+                } else if (Q4_2.checked) {
+                    haids = 'no';
+                };
+                if (Q5_1.checked) {
+                    haids_yr = 'na';
+                } else if (Q5_2.checked) {
+                    haids_yr = 'low';
+                } else if (Q5_3.checked) {
+                    haids_yr = 'high';
+                };
+                if (Q6_1.checked) {
+                    haids_day = 'na';
+                } else if (Q6_2.checked) {
+                    haids_day = 'low';
+                } else if (Q6_3.checked) {
+                    haids_day = 'high';
+                };
+
+                let date = new Date;
+                let timeprint = `${("0" + (date.getDate())).slice(-2)}` + `${("0" + (date.getMonth() + 1)).slice(-2)}` + `${date.getFullYear()}` + `${("0" + (date.getHours())).slice(-2)}` + `${("0" + (date.getMinutes())).slice(-2)}`;
+
+                taskresults.child(userID).child('misc').child(timeprint).set({
+                    'age': age,
+                    'comp': comp,
+                    'sex': sex,
+                    'haids': haids,
+                    'headphones': headphones,
+                    'haids_yr': haids_yr,
+                    'haids_day': haids_day,
+                });
+
+                taskresults.child(userID).child('comments').child(timeprint).set(comments_box.value);
+                document.getElementById('demog_div').style.display = 'none';
+
+                if (userID == 'audcogncl') {
+                    document.getElementById('results_div').style.display = 'block';
+                    document.getElementById('sibThres').innerHTML = "The SIB Threshold is " + sibThreshold;
+                    document.getElementById('dinThres').innerHTML = "The DIN Threshold is " + dinThreshold;
+                    document.getElementById('freqPrec').innerHTML = "The Precision for Frequency is " + precisionFreqLoad1;
+                    document.getElementById('amPrec').innerHTML = "The Precision for AM Rate is " + precisionAMLoad1;
+                    displayAudCogNCLResults();
+                } else if (userID == 'demo') {
+                    document.getElementById('title_div').innerHTML = "Debrief Information";
+                    document.getElementById('controller_div').style.display = 'block';
+                    document.getElementById('debrief_div').style.display = 'block';
+                } else {
+                    document.getElementById('title_div').innerHTML = "Debrief Information";
+                    document.getElementById('controller_div').style.display = 'block';
+                    document.getElementById('debrief_div').style.display = 'block';
+                };
+
+            };
+        }
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,347 @@
+<html>
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="static/main.css">
+
+    <title> AudCog - Great Minds </title>
+
+</head>
+
+<body>
+    <header class="site-header">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top" id="audcog_header">
+            <div class="container">
+                <a class="navbar-brand mx-auto" href="/"> AudCog: Great
+                    Minds</a>
+            </div>
+        </nav>
+    </header>
+
+    <main role="main" class="container-fluid py-2">
+        <div class="row justify-content-center">
+            <div class="col">
+            </div>
+
+            <!-- Appearances of all divs in this container are run by main.js -->
+            <div class="col-md-12">
+
+                <!-- Title Div is shown to guide a participant through task -->
+                <div class="content-section text-center font-weight-bold border-0 h3" id="title_div">
+                </div>
+
+                <div class="progress" style="height: 30px;">
+                    <div class="progress-bar progress-bar-striped bg-info" id=progressBar role="progressbar"
+                        style="width: 0%" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+
+                <!-- This Error Div comes up if the browser is not Chrome or the Screen is less than 1000 pixels wide and 500 pixels high -->
+                <div class="content-section" id="browser_device_error" style='display:none'>
+                    <p> This device or browser is not supported OR </p>
+                    <p> Your screen is too small </p>
+                    <p> Please use Google Chrome on a Desktop or Laptop computer </p>
+                    <p> Try maximizing your browser window and refresh the webpage </p>
+                </div>
+
+                <div class="content-section" id="id_error" style='display:none'>
+                    <p> Your ID is not registered to take part </p>
+                    <p> Or there is an error in the way it is entered </p>
+                    <p> </p>
+                    <p> Please contact
+                        <span class="font-weight-bold">audcog@ncl.ac.uk
+                        </span>for more information
+                    </p>
+                </div>
+
+                <!-- Login Page is shown when someone first encounters the website -->
+                <div class="content-section text-center border-0 p-5" id="login_div">
+                    <h6 class="text-dark font-weight-normal py-2"> Press the <span class="font-weight-bold"> 'START'
+                        </span>button below to <span class="font-weight-bold">Begin </span></h5>
+                        <div>
+                            <div class='p-2'>
+                                <button id='submitbutton' class="btn btn-dark border-dark font-weight-bold py-2"
+                                    type='button'> START </button>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <input id='dashPassword' type='text' class='p-4' style='visibility:hidden'>
+                        </div>
+                        <div class="text-danger font-weight-bold p-2">
+                            <a id="error_message"> </a>
+                        </div>
+                        <h6 class="text-danger font-weight-normal"> <span class="font-weight-bold"> WARNING: </span> Do
+                            not use Safari as a web browser. Remember to use Headphones too! </h5>
+                </div>
+
+                <!-- Controller Div is shown when an experimenter wants to test a task -->
+                <div class="content-section text-center border-0" id="controller_div" style='display:none'>
+                    <div class="form-group" id="debrief_div" style='display:none'>
+                        <div class="col m-3 p-3 border border-secondary rounded bg-light">
+                            <h5 class="text-muted p-2"> Thank you for participating in the AudCog study. </h5>
+                            <h5 class="text-muted p-2"> You contribution will help us understand the link between
+                                hearing ability and risk for dementia. </h5>
+                            <h5 class="text-muted p-2"> As mentioned previously, these were research tests only so we do
+                                not provide any feedback on performance. </h5>
+                            <hr>
+                            <h5 class="text-muted p-2"> You are eligible for a £50 Amazon voucher </h5>
+                            <h6 class="text-muted font-weight-light p-2"> If you would like to be entered into a draw
+                                for this, please email the
+                                address below </h6>
+                            <h6 class="text-muted font-weight-normal p-2"> audcog@ncl.ac.uk </h6>
+                        </div>
+                        <h5 class="text-dark font-weight-normal p-1"> You may now close this window </h5>
+                    </div>
+                </div>
+
+                <!-- Consent Div is shown when an experimenter wants to test a task -->
+                <div class="content-section text-center border-0" id="consent_div" style='display:none'>
+                    <div class="form-group">
+                        <h4 class="text-dark font-weight-normal p-3"> Please read the form below carefully </h4>
+                        <div class="col m-3 p-3 border border-secondary rounded bg-light">
+                            <h5 class="text-muted p-2"> Hearing ability is related to risk of dementia but the reasons
+                                for this are unclear. </h5>
+                            <h5 class="text-muted p-2"> This study involves a range of hearing tests that are designed
+                                to help us understand why this link is there. </h5>
+                            <h5 class="text-muted p-2"> There are no anticipated risks to this study. Please keep your
+                                volume low to begin with and adjust to comfort. </h5>
+                            <h5 class="text-muted font-weight-normal p-2"> All your responses are confidential and you
+                                cannot be identified from the responses you provide </h5>
+                            <h5 class="text-muted font-weight-normal p-2"> You are also free to leave at any point in
+                                the tasks without any repurcussions </h5>
+                            <h5 class="text-muted p-2"> As the tasks are not used in the clinic and are for research
+                                only, we do not provide feedback on your performance </h5>
+                            <h6 class="text-muted font-weight-light p-2"> The study has been approved by the Oxford C
+                                NHS Research Ethics Committee</h6>
+                            <h6 class="text-muted font-weight-light p-2"> The main investigator of this study is Dr
+                                Meher Lad, a neurologist at Newcastle University </h6>
+                            <h6 class="text-muted font-weight-light p-2"> This study is sponsored by the Newcastle
+                                University Hospitals NHS Foundation Trust </h6>
+                        </div>
+                        <h5 class="text-dark font-weight-normal p-1"> Please click the button below if you understand
+                            the information above and consent to participate in the study </h5>
+                        <div class="text-center col p-3">
+                            <button id='consentSubmitButton' class="btn btn-dark border-dark font-weight-bold"
+                                type="button"> AGREE </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Speech-in-Noise Task Div is shown when begins the task run on sib.js -->
+                <div class="content-section text-center border-0" id="sib_div" style='display:none'>
+                </div>
+
+                <!-- Auditory Working Memory Task Div is shown when begins the task run on awm.js -->
+                <div class="content-section text-center border-0" id="awm_div" style='display:none'>
+                </div>
+
+                <!-- Digits-in-Noise Task Div is shown when begins the task run on adn.js -->
+                <div class="content-section text-center border-0" id="din_div" style='display:none'>
+                </div>
+
+                <!-- Gold-MSI Div is shown when begins the task run on gmsi.js -->
+                <div id="gmsi_div" class="content-section text-center border-0" style='display:none'>
+                    <div class="text-center col p-3">
+                        <h4 id='gmsi_question' class="text-center text-dark font-weight-bold p-1"> </h4>
+                    </div>
+                    <div class="text-center col-sm p-3">
+                        <button id='btn_choice_1' class="btn btn-outline-info btn-block" type="button"> </button>
+                        <button id='btn_choice_2' class="btn btn-outline-info btn-block" type="button"> </button>
+                        <button id='btn_choice_3' class="btn btn-outline-info btn-block" type="button"> </button>
+                        <button id='btn_choice_4' class="btn btn-outline-info btn-block" type="button"> </button>
+                        <button id='btn_choice_5' class="btn btn-outline-info btn-block" type="button"> </button>
+                        <button id='btn_choice_6' class="btn btn-outline-info btn-block" type="button"> </button>
+                        <button id='btn_choice_7' class="btn btn-outline-info btn-block" type="button"> </button>
+                    </div>
+                    <div class="text-center col p-3">
+                        <div class="text-danger font-weight-bold p-4">
+                            <a id="question_alert"> </a>
+                        </div>
+                    </div>
+                    <div class="text-center col p-3">
+                        <button id='gmsinextbutton' class="btn btn-dark border-dark font-weight-bold" type="button">
+                            Next </button>
+                    </div>
+                </div>
+
+                <!-- Demographics Div is shown when displayDemogForm function runs -->
+                <div class="text-center content-section border-0" id="demog_div" style='display:none'>
+                    <div class="form-group">
+                        <h4 class="text-dark font-weight-normal p-5"> Please answer the last few questions below...
+                        </h4>
+                        <div class="col m-3 p-3 border border-secondary rounded bg-light">
+                            <h5 class="text-muted font-weight-light p-2"> How old are you? </h5> <input id='userAge'
+                                type='text' class='p-2' style="text-align:center">
+                        </div>
+                        <div class="col m-3 p-3 border border-secondary rounded bg-light">
+                            <h5 class="text-muted font-weight-light p-2"> What was your sex at birth? </h5>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions1" id="Q1_1"
+                                    value="option1">
+                                <label class="form-check-label" for="Q1_1"> Male </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions1" id="Q1_2"
+                                    value="option2">
+                                <label class="form-check-label" for="Q1_2"> Female </label>
+                            </div>
+                        </div>
+                        <div class="col m-3 p-3 border border-secondary rounded bg-light">
+                            <h5 class="text-muted font-weight-light p-2"> What device are you using? </h5>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions2" id="Q2_1"
+                                    value="option1">
+                                <label class="form-check-label" for="Q2_1"> Laptop </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions2" id="Q2_2"
+                                    value="option1">
+                                <label class="form-check-label" for="Q2_2"> Desktop </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions2" id="Q2_3"
+                                    value="option2">
+                                <label class="form-check-label" for="Q2_3"> Tablet/iPad </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions2" id="Q2_4"
+                                    value="option3">
+                                <label class="form-check-label" for="Q2_4"> Mobile Phone </label>
+                            </div>
+                        </div>
+                        <div class="col m-3 p-3 border border-secondary rounded bg-light">
+                            <h5 class="text-muted font-weight-light p-2"> What headphones are you using? </h5>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions3" id="Q3_1"
+                                    value="option1">
+                                <label class="form-check-label" for="Q3_1"> Over-ear heaphones</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions3" id="Q3_2"
+                                    value="option2">
+                                <label class="form-check-label" for="Q3_2"> In-ear headphones </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions3" id="Q3_3"
+                                    value="option2">
+                                <label class="form-check-label" for="Q3_3"> Speakers </label>
+                            </div>
+                        </div>
+                        <div class="col m-3 p-3 border border-secondary rounded bg-light">
+                            <h5 class="text-muted font-weight-light p-2"> Do you have Hearing Aids? </h5>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions4" id="Q4_1"
+                                    value="option1">
+                                <label class="form-check-label" for="Q4_1"> Yes </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions4" id="Q4_2"
+                                    value="option2">
+                                <label class="form-check-label" for="Q4_2"> No </label>
+                            </div>
+                        </div>
+                        <div class="col m-3 p-3 border border-secondary rounded bg-light">
+                            <h5 class="text-muted font-weight-light p-2"> If you have hearing aids, how long have you
+                                used them for? </h5>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions5" id="Q5_1"
+                                    value="option1">
+                                <label class="form-check-label" for="Q5_1"> No hearing aids </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions5" id="Q5_2"
+                                    value="option2">
+                                <label class="form-check-label" for="Q5_2"> Less than 1 year </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions5" id="Q5_3"
+                                    value="option2">
+                                <label class="form-check-label" for="Q5_3"> More than 1 year </label>
+                            </div>
+                        </div>
+                        <div class="col m-3 p-3 border border-secondary rounded bg-light">
+                            <h5 class="text-muted font-weight-light p-2"> If you have hearing aids, how often do you use
+                                them? </h5>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions6" id="Q6_1"
+                                    value="option1">
+                                <label class="form-check-label" for="Q6_1"> No hearing aids </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions6" id="Q6_2"
+                                    value="option2">
+                                <label class="form-check-label" for="Q6_2"> Less than 4 hours per day </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions6" id="Q6_3"
+                                    value="option2">
+                                <label class="form-check-label" for="Q6_3"> More than 4 hours per day </label>
+                            </div>
+                        </div>
+                        <h5 class="text-muted font-weight-normal p-3">
+                            <ul> Please leave any <span class='font-weight-bold'>comments</span> in the box below as
+                                feedback </ul>
+                        </h5>
+                        <textarea class="form-control" id="comments_box" rows="3"
+                            placeholder="Enter your comments here..."></textarea>
+
+                        <h6 class="text-dark font-weight-light py-5"> Press the <span class="font-weight-bold">Submit
+                            </span>button below to continue </h5>
+                            <div class="text-center col">
+                                <div class="text-danger font-weight-bold p-2">
+                                    <a id="thanks_alert"> </a>
+                                </div>
+                            </div>
+                            <div>
+                                <button id='demogSubmitButton' class="btn btn-dark border-dark font-weight-bold"
+                                    type='button'> Submit </button>
+                            </div>
+                    </div>
+                </div>
+
+                <!-- Results Chart Div is shown when a task runs independently in Debug mode -->
+                <div class="content-section text-center border-0" id="results_div" style='display:none'>
+                    <div id="resultsChart1">
+                    </div>
+                    <h4 id='hugScore' class="text-center text-dark font-weight-bold p-1"> </h4>
+                    <h4 id='sibThres' class="text-center text-dark font-weight-bold p-1"> </h4>
+                    <h4 id='dinThres' class="text-center text-dark font-weight-bold p-1"> </h4>
+                    <div id="resultsChart2">
+                    </div>
+                    <h4 id='freqPrec' class="text-center text-dark font-weight-bold p-1"> </h4>
+                    <h4 id='amPrec' class="text-center text-dark font-weight-bold p-1"> </h4>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Optional JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.4.0/lib/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-database.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/7.1.0/math.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src='https://unpkg.com/simple-statistics@7.7.0/dist/simple-statistics.min.js'></script>
+    <script src="https://cdn.plot.ly/plotly-2.6.3.min.js"></script>
+
+    <!-- Local JavaScript Files -->
+    <script type="text/javascript" src="js/controller.js"> </script>
+    <script type="text/javascript" src="js/main.js"> </script>
+    <script type="text/javascript" src="js/sib.js"> </script>
+    <script type="text/javascript" src="js/awm.js"> </script>
+    <script type="text/javascript" src="js/mtx.js"> </script>
+    <script type="text/javascript" src="js/din.js"> </script>
+    <script type="text/javascript" src="js/gmsi.js"> </script>
+
+</body>
+
+</html>
