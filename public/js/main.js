@@ -71,10 +71,19 @@ function getUserIDFromQueryString() {
 }
 
 document.getElementById('submitbutton').addEventListener('click', function () {
+    // Proactively unlock/resume audio and request fullscreen for better compatibility
+    try {
+        if (window.AudcogUtils) {
+            AudcogUtils.unlockAudio();
+            AudcogUtils.requestFullscreenSafely();
+        } else {
+            openFullscreen();
+        }
+    } catch (e) {}
+
     // UserID is appended to a dummy email address that is needed to access Firebase Auth details
     if (userID != '') {
         auth.signInAnonymously().then(cred => {
-            openFullscreen();
             document.getElementById('login_div').style.display = 'none';
             document.getElementById('audcog_header').style.display = 'none';
             document.body.style.margin = "0px";

@@ -23,3 +23,23 @@ h1, h2, h3, h4, h5, h6 {
   canvas {
     margin: 0 auto;
 }
+
+/* Mobile/touch optimizations */
+html, body {
+    height: 100%;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Prevent long-press context menus and text selection during tasks */
+* {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Ensure canvas consumes gestures for better p5 interactions */
+canvas, #sib_div, #din_div, #awm_div {
+    touch-action: manipulation;
+}
